@@ -1,0 +1,23 @@
+{
+  "name": "MindGuard AI",
+  "description": "Agentic AI for Mental Health Awareness & Suicide Prevention",
+  "repository": "https://github.com/codecrafter34/MindGuard",
+  "keywords": [
+    "IBM",
+    "Granite",
+    "watsonx.ai",
+    "Agentic AI",
+    "Mental Health",
+    "Suicide Prevention",
+    "RAG",
+    "Cloudant",
+    "React",
+    "Node.js",
+    "Express"
+  ],
+  "env": {},
+  "formation": {},
+  "scripts": {
+    "start": "npm start"
+  }
+}
