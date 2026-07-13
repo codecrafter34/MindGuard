@@ -1,0 +1,93 @@
+# IBM Code Engine — Backend Application
+# Deploy with:
+#   ibmcloud ce application create --file backend-app.yaml
+
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: mindguard-backend
+  namespace: mindguard
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "1"
+        autoscaling.knative.dev/maxScale: "10"
+    spec:
+      containerConcurrency: 50
+      timeoutSeconds: 120
+      containers:
+        - image: icr.io/YOUR_NAMESPACE/mindguard-backend:latest
+          ports:
+            - containerPort: 3001
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: "3001"
+            - name: CORS_ORIGIN
+              valueFrom:
+                secretKeyRef:
+                  name: mindguard-secrets
+                  key: CORS_ORIGIN
+            - name: SESSION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: mindguard-secrets
+                  key: SESSION_SECRET
+            - name: WATSONX_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mindguard-secrets
+                  key: WATSONX_API_KEY
+            - name: WATSONX_PROJECT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: mindguard-secrets
+                  key: WATSONX_PROJECT_ID
+            - name: WATSONX_URL
+              valueFrom:
+                secretKeyRef:
+                  name: mindguard-secrets
+                  key: WATSONX_URL
+            - name: WATSONX_CHAT_MODEL
+              valueFrom:
+                secretKeyRef:
+                  name: mindguard-secrets
+                  key: WATSONX_CHAT_MODEL
+            - name: WATSONX_CLASSIFY_MODEL
+              valueFrom:
+                secretKeyRef:
+                  name: mindguard-secrets
+                  key: WATSONX_CLASSIFY_MODEL
+            - name: CLOUDANT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: mindguard-secrets
+                  key: CLOUDANT_URL
+            - name: CLOUDANT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mindguard-secrets
+                  key: CLOUDANT_API_KEY
+            - name: CLOUDANT_DB_PREFIX
+              value: mindguard_
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3001
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3001
+            initialDelaySeconds: 5
+            periodSeconds: 10

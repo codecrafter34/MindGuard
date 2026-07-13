@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background-light text-slate-800 dark:bg-background-dark dark:text-slate-100 antialiased transition-colors duration-300;
+  }
+  
+  ::selection {
+    @apply bg-primary/30 text-primary-dark dark:text-primary-light;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border border-white/20 dark:border-slate-700/50 shadow-soft;
+  }
+  
+  .glass-button {
+    @apply bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-700 shadow-sm transition-all duration-200;
+  }
+  
+  .primary-button {
+    @apply bg-gradient-to-r from-primary to-primary-light text-white font-medium shadow-glow hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 active:scale-95;
+  }
+  
+  .btn-icon {
+    @apply p-2 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-90;
+  }
+
+  .card-hover {
+    @apply hover:shadow-md hover:-translate-y-1 transition-all duration-300;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 dark:bg-slate-700 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-300 dark:bg-slate-600;
+}
+
+/* Typing Dots Animation */
+.typing-dot {
+  animation: typing-dot-bounce 1.4s infinite ease-in-out both;
+}
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes typing-dot-bounce {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* Heartbeat Loading */
+.heartbeat {
+  animation: pulse 1.5s ease-in-out infinite;
+}
